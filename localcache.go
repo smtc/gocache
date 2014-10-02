@@ -36,7 +36,10 @@ func (c *LocalCache) Retrieve(k string, v interface{}) (bool, error) {
 		return false, nil
 	}
 	err := json.Unmarshal(x.([]byte), v)
-	return suc, err
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
 func (c *LocalCache) Add(k string, x interface{}, d time.Duration) error {

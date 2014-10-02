@@ -35,4 +35,18 @@ func TestCache(t *testing.T) {
 		t.Fatal("i should be deleted")
 	}
 
+	type User struct {
+		Id   int64
+		Name string
+	}
+
+	c.Store("user", User{Id: 3, Name: "test"}, 0)
+	var user User
+	suc, err = c.Retrieve("user", &user)
+	if suc == false || err != nil {
+		t.Fatal("error")
+	}
+	if user.Id != 3 || user.Name != "test" {
+		t.Fatal("error")
+	}
 }
